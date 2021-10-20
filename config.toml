@@ -11,6 +11,8 @@ disableLiveReload = false # Optional, set true to disable live reload
 enableRobotsTXT = true # Suggested, enable robots.txt file
 sectionPagesMenu = "main" # Enable menu system for lazy bloggers
 
+publishDir = "docs"
+
 [markup.goldmark.renderer]
   unsafe = true # Optional, allows HTML inside your CommonMark content
 [markup.tableOfContents]

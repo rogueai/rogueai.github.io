@@ -13,7 +13,14 @@
     <generator>Hugo 0.88.1</generator>
     <language>en-US</language>
     <copyright>Copyright &amp;copy; Copyright RogueAI. Licensed under CC-BY-ND-4.0.</copyright>
-    <lastBuildDate>Wed, 20 Oct 2021 13:58:59 UT</lastBuildDate>
+    <lastBuildDate>Wed, 20 Oct 2021 14:19:57 UT</lastBuildDate>
     <atom:link href="https://rogueai.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>post</title>
+      <link>https://rogueai.github.io/tags/post/</link>
+      <guid>https://rogueai.github.io/tags/post/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
   </channel>
 </rss>

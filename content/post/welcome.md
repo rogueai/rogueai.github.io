@@ -2,10 +2,10 @@
 title = "Welcome"
 date = 2021-10-20T15:17:15+02:00
 description = "This text was generated using the After Dark post archetype."
-draft = true
+draft = false
 toc = false
 categories = ["hacking"]
-tags = ["after", "dark"]
+tags = ["post"]
 images = [
   "https://source.unsplash.com/collection/983219/1600x900"
 ] # overrides site-wide open graph image
