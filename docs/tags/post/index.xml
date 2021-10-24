@@ -13,12 +13,13 @@
     <generator>Hugo 0.88.1</generator>
     <language>en-US</language>
     <copyright>Copyright &amp;copy; Copyright RogueAI. Licensed under CC-BY-ND-4.0.</copyright>
-    <lastBuildDate>Wed, 20 Oct 2021 14:19:57 UT</lastBuildDate>
+    <lastBuildDate>Sun, 24 Oct 2021 19:06:24 UT</lastBuildDate>
     <atom:link href="https://rogueai.github.io/tags/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Welcome</title>
       <link>https://rogueai.github.io/post/welcome/</link>
       <pubDate>Wed, 20 Oct 2021 13:17:15 UT</pubDate>
+      <dc:creator>RogueAI</dc:creator>
       <guid>https://rogueai.github.io/post/welcome/</guid>
       <description>Before continuing please create a post archetype. Archetypes are located within markdown files in the archetypes directory of your site:
 flying-toasters ├── archetypes │ ├── default.md │ └── post.md ├── content If post.md does not exist yet, copy it from the After Dark default:

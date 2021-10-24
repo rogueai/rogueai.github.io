@@ -1,0 +1,18 @@
+[comments]
+  # Comment provider:
+  provider = "giscus"
+
+  # Which page types are commentable?
+  commentable = {page = true, post = true, docs = false, project = false, publication = true, talk = false}
+
+  # Configuration of giscus
+  [comments.giscus]
+    repo = "rogueai/rogueai.github.io" # Repo where the comments will live
+    repo_id = "MDEwOlJlcG9zaXRvcnk1NTI5NzQ3MQ==" # Repo where the comments will live
+    category = "Posts" # Repo where the comments will live
+    category_id = "DIC_kwDOA0vFv84B_j4i" # Repo where the comments will live
+    mapping = "pathname" # How Utterances will match comment to page
+    reactions_enabled = 1
+    emit_metadata = 0
+    theme = "dark" # What theme to use
+    lang = "en"

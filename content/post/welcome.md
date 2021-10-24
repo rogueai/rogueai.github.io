@@ -4,13 +4,14 @@ date = 2021-10-20T15:17:15+02:00
 description = "This text was generated using the After Dark post archetype."
 draft = false
 toc = false
+author = "RogueAI"
 categories = ["hacking"]
 tags = ["post"]
 images = [
   "https://source.unsplash.com/collection/983219/1600x900"
 ] # overrides site-wide open graph image
 [[copyright]]
-  owner = "After Dark"
+  owner = "RogueAI"
   date = "2021"
   license = "cc-by-nc-sa-4.0"
 +++
