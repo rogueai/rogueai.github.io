@@ -4,6 +4,7 @@ theme = "terminal"
 paginate = 5
 
 publishDir = "docs"
+enableGitInfo = true
 
 [params]
   # dir name of your main content (default is `content/posts`).
@@ -17,13 +18,13 @@ publishDir = "docs"
   showMenuItems = 2
 
   # show selector to switch language
-  showLanguageSelector = false
+  showLanguageSelector = true
 
   # set theme to full screen width
   fullWidthTheme = false
 
   # center theme with default width
-  centerTheme = false
+  centerTheme = true
 
   # if your resource directory contains an image called `cover.(jpg|png|webp)`,
   # then the file will be used as a cover automatically.
@@ -32,7 +33,7 @@ publishDir = "docs"
 
   # set post to show the last updated
   # If you use git, you can set `enableGitInfo` to `true` and then post will automatically get the last updated
-  showLastUpdated = false
+  showLastUpdated = true
 
   # set a custom favicon (default is a `themeColor` square)
   # favicon = "favicon.ico"
@@ -44,7 +45,7 @@ publishDir = "docs"
   # oneHeadingSize = true # default
 
   # whether to show a page's estimated reading time
-  # readingTime = false # default
+  readingTime = true # default
 
   # whether to show a table of contents
   # can be overridden in a page's front-matter
@@ -65,8 +66,8 @@ publishDir = "docs"
 [languages]
   [languages.en]
     languageName = "English"
-    title = "Terminal"
-    subtitle = "A simple, retro theme for Hugo"
+    title = "RogueAI"
+    subtitle = ""
     owner = ""
     keywords = ""
     copyright = ""
@@ -79,15 +80,11 @@ publishDir = "docs"
     missingBackButtonLabel = "Back to home page"
 
     [languages.en.params.logo]
-      logoText = "Terminal"
+      logoText = "RogueAI"
       logoHomeLink = "/"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about"
-      [[languages.en.menu.main]]
-        identifier = "showcase"
-        name = "Showcase"
-        url = "/showcase"
+        identifier = "posts"
+        name = "Posts"
+        url = "/posts"
