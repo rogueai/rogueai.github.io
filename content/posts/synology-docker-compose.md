@@ -4,11 +4,11 @@ date = 2022-02-11
 description = "Deploy docker containers on Synology NAS using Docker Compose"
 draft = false
 toc = false
-author = "RogueAI"
-categories = ["self host"]
-tags = ["post"]
+author = "rogueai"
+categories = ["post"]
+tags = ["selfhost"]
 [[copyright]]
-  owner = "RogueAI"
+  owner = "rogueai"
   date = "2022"
   license = "cc-by-nc-sa-4.0"
 +++

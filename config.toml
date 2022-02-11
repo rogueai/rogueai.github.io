@@ -77,11 +77,11 @@ enableGitInfo = true
 [languages]
   [languages.en]
     languageName = "English"
-    title = "RogueAI"
+    title = "> RogueAI"
     subtitle = ""
     owner = ""
     keywords = ""
-    copyright = "© 2022 RogueAI"
+    copyright = "© 2022 Rogue|AI"
     menuMore = "Show more"
     readMore = "Read more"
     readOtherPosts = "Read other posts"
@@ -91,7 +91,7 @@ enableGitInfo = true
     missingBackButtonLabel = "Back to home page"
 
     [languages.en.params.logo]
-      logoText = "RogueAI"
+      logoText = "Rogue|AI"
       logoHomeLink = "/"
 
     [languages.en.menu]
