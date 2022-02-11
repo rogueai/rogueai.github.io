@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posts | Rogue.AI</title>
     <meta name="description" content="">
-    <meta name="keywords" content="hacking, ">
+    <meta name="keywords" content="hacking, self host, ">
     
     
     
@@ -214,6 +214,48 @@ a[itemprop="url"]:hover {
   </header>
   
   
+  
+    
+
+
+
+
+<article itemprop="citation" itemscope itemtype="https://schema.org/Thing" id="docker-compose-on-synology-nas">
+  <header>
+    <h1 itemprop="name">
+      <a href="/post/synology-docker-compose/">Docker Compose on Synology NAS</a>
+    </h1>
+    
+      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>1 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2022-02-11T00:00:00&#43;00:00">11 Feb, 2022</time>
+
+</p>
+    
+    
+      <blockquote itemprop="headline">Deploy docker containers on Synology NAS using Docker Compose</blockquote>
+    
+  </header>
+  <div itemprop="">A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
+ Install Docker package Make sure the docker network is allowed through the firewall:  Navigate to: Control Panel -&gt; Connectivity -&gt; Security -&gt; Firewall Add a custom rule  Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&gt; Specify your docker network&rsquo;s IP and subnet mask     Create a scheduled task  Navigate to: System -&gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.</div>
+  <meta itemprop="inLanguage" content="en-US">
+  <meta itemprop="datePublished" content="2022-02-11T00:00:00&#43;00:00">
+  <meta itemprop="dateModified" content="2022-02-11T00:00:00&#43;00:00">
+  
+</article>
+
+  <nav class="readmore">
+    <a itemprop="url" href="/post/synology-docker-compose/">Read More&nbsp;&raquo;</a>
+  </nav>
+
+
   
     
 
