@@ -10,10 +10,10 @@
       <url>https://source.unsplash.com/collection/983219/2000x1322</url>
     </image>
     <ttl>1440</ttl>
-    <generator>Hugo 0.92.1</generator>
+    <generator>After Dark 9.2.3 (Hugo 0.92.1)</generator>
     <language>en-US</language>
     <copyright>Copyright &amp;copy; Copyright RogueAI. Licensed under CC-BY-ND-4.0.</copyright>
-    <lastBuildDate>Fri, 11 Feb 2022 08:47:24 UT</lastBuildDate>
+    <lastBuildDate>Fri, 11 Feb 2022 09:36:00 UT</lastBuildDate>
     <atom:link href="https://rogueai.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker Compose on Synology NAS</title>
@@ -26,32 +26,6 @@
       <category domain="https://rogueai.github.io/categories/self-host">Self Host</category>
       <content:encoded><![CDATA[A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
  Install Docker package Make sure the docker network is allowed through the firewall:  Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall Add a custom rule  Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask     Create a scheduled task  Navigate to: System -&amp;gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.yml up -d Change the path to where your docker compose file is located Set the task as disabled, and run it manually from the context menu    ]]></content:encoded>
-    </item>
-    <item>
-      <title>Welcome</title>
-      <link>https://rogueai.github.io/post/welcome/</link>
-      <pubDate>Wed, 20 Oct 2021 13:17:15 UT</pubDate>
-      <dc:creator>RogueAI</dc:creator>
-      <guid>https://rogueai.github.io/post/welcome/</guid>
-      <description>Before continuing please create a post archetype. Archetypes are located within markdown files in the archetypes directory of your site:
-flying-toasters ├── archetypes │ ├── default.md │ └── post.md ├── content If post.md does not exist yet, copy it from the After Dark default:
-$ cd flying-toasters $ cp themes/after-dark/archetypes/post.md archetypes/ Make some changes to post.md then use hugo new to draft a new post:
-$ vi archetypes/post.md # or vim, emacs, nano ... $ hugo new post/totally-twisted.md If hugo server is running with the --navigateToChanged flag your new post will appear automatically in JavaScript-enabled browsers. If you see an empty page you probably need to restart hugo server with the --buildDrafts flag.
-Use archetypes to maintain consistency when creating content for Custom Layouts. Like custom layouts Hugo Archetypes may contain templating logic.
-</description>
-      <category domain="https://rogueai.github.io/categories/hacking">Hacking</category>
-      <content:encoded><![CDATA[Before continuing please create a post archetype. Archetypes are located within markdown files in the archetypes directory of your site:
-flying-toasters ├── archetypes │ ├── default.md │ └── post.md ├── content If post.md does not exist yet, copy it from the After Dark default:
-$ cd flying-toasters $ cp themes/after-dark/archetypes/post.md archetypes/ Make some changes to post.md then use hugo new to draft a new post:
-$ vi archetypes/post.md # or vim, emacs, nano ... $ hugo new post/totally-twisted.md If hugo server is running with the --navigateToChanged flag your new post will appear automatically in JavaScript-enabled browsers. If you see an empty page you probably need to restart hugo server with the --buildDrafts flag.
-Use archetypes to maintain consistency when creating content for Custom Layouts. Like custom layouts Hugo Archetypes may contain templating logic.
- Tip: This message appears below a Manual Summary Split.  The above tip uses a shortcode called Alert. In addition to a number of Shortcodes After Dark provides a number of other Features.
-The Module System, for example, provides a module to display image animations with alpha transparency and something not possible using a GIF:
-If you do not see the above animation, you may install the Fractal Forest module yourself or reinstall After Dark using Quick Install for instant setup.
-Review the Online Help to learn about other useful features such as the Section Menus navigational aid, responsive Post Images, offline Fuzzy Search and more.
-If online help isn&amp;rsquo;t running, go ahead and start it using the corresponding command from the following cheat sheet within your site directory:
-# After Dark scripts ./themes/after-dark/bin/upgrade # check for updates and upgrade ./themes/after-dark/bin/help # start online help docs ./themes/after-dark/bin/install # run the quick installer # Hugo commands hugo # build site with default settings hugo --minify # build with minified sources (hugo 0.47 and above) hugo --config config.prod.toml # build with custom config hugo --templateMetrics # generate template metrics hugo new about.md # generate page content hugo new post/coming-soon.md # generate new post content hugo serve # serve locally with default settings hugo serve --buildDrafts --navigateToChanged # serve with drafts for editing hugo serve --buildExpired # serve locally showing expired content hugo serve --disableLiveReload # serve locally w/live reload disabled hugo list drafts # list draft content hugo list expired # list expired content hugo list future # list future content hugo [serve] --debug # build or serve hugo with debug info hugo [command] --help Thank you for choosing After Dark.
-]]></content:encoded>
     </item>
   </channel>
 </rss>
