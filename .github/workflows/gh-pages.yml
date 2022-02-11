@@ -1,4 +1,4 @@
-name: pages-hugo-deploy
+name: pages-build-hugo
 
 on:
   push:
