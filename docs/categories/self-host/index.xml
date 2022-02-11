@@ -1,31 +1,48 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <docs>https://blogs.law.harvard.edu/tech/rss</docs>
-    <title>self host on Rogue.AI</title>
+    <title>self host on Terminal</title>
     <link>https://rogueai.github.io/categories/self-host/</link>
-    <description>Recent content in self host on Rogue.AI</description>
-    <image>
-      <title>self host on Rogue.AI</title>
-      <link>https://rogueai.github.io/categories/self-host/</link>
-      <url>https://source.unsplash.com/collection/983219/2000x1322</url>
-    </image>
-    <ttl>1440</ttl>
-    <generator>After Dark 9.2.3 (Hugo 0.92.1)</generator>
-    <language>en-US</language>
-    <copyright>Copyright &amp;copy; Copyright RogueAI. Licensed under CC-BY-ND-4.0.</copyright>
-    <lastBuildDate>Fri, 11 Feb 2022 09:36:00 UT</lastBuildDate>
-    <atom:link href="https://rogueai.github.io/categories/self-host/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in self host on Terminal</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/categories/self-host/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker Compose on Synology NAS</title>
-      <link>https://rogueai.github.io/post/synology-docker-compose/</link>
-      <pubDate>Fri, 11 Feb 2022 00:00:00 UT</pubDate>
-      <dc:creator>RogueAI</dc:creator>
-      <guid>https://rogueai.github.io/post/synology-docker-compose/</guid>
+      <link>https://rogueai.github.io/posts/synology-docker-compose/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rogueai.github.io/posts/synology-docker-compose/</guid>
       <description>A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
  Install Docker package Make sure the docker network is allowed through the firewall:  Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall Add a custom rule  Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask     Create a scheduled task  Navigate to: System -&amp;gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.</description>
-      <category domain="https://rogueai.github.io/categories/self-host">Self Host</category>
-      <content:encoded><![CDATA[A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
- Install Docker package Make sure the docker network is allowed through the firewall:  Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall Add a custom rule  Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask     Create a scheduled task  Navigate to: System -&amp;gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.yml up -d Change the path to where your docker compose file is located Set the task as disabled, and run it manually from the context menu    ]]></content:encoded>
+      <content>&lt;p&gt;A quick howto with the steps required to setup &lt;code&gt;docker&lt;/code&gt; and &lt;code&gt;docker-compose&lt;/code&gt; on Synology NAS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Install Docker package&lt;/li&gt;
+&lt;li&gt;Make sure the docker network is allowed through the firewall:
+&lt;ul&gt;
+&lt;li&gt;Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall&lt;/li&gt;
+&lt;li&gt;Add a custom rule
+&lt;ul&gt;
+&lt;li&gt;Ports: Add all your exposed container ports&lt;/li&gt;
+&lt;li&gt;Protocol: TCP&lt;/li&gt;
+&lt;li&gt;Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Create a scheduled task
+&lt;ul&gt;
+&lt;li&gt;Navigate to: System -&amp;gt; Task Scheduler&lt;/li&gt;
+&lt;li&gt;Create a new task for user &lt;code&gt;root&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;In Task Settings, set a User-defined script
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;docker-compose -f /volume1/docker/docker-compose.yml up -d
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;Change the path to where your docker compose file is located&lt;/li&gt;
+&lt;li&gt;Set the task as disabled, and run it manually from the context menu&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
     </item>
+    
   </channel>
 </rss>
