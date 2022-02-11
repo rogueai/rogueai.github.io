@@ -63,6 +63,17 @@ enableGitInfo = true
   creator = ""
   site = ""
 
+[params.giscus]
+  repo = "rogueai/rogueai.github.io" 
+  repo_id = "MDEwOlJlcG9zaXRvcnk1NTI5NzQ3MQ=="
+  category = "Posts"
+  category_id = "DIC_kwDOA0vFv84B_j4i"
+  mapping = "pathname"
+  reactions-enabled = "1"
+  emit-metadata = "0"
+  theme = "transparent_dark"
+  lang = "en"
+  
 [languages]
   [languages.en]
     languageName = "English"

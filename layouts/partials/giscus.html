@@ -1,13 +1,16 @@
+
+{{- if .Site.Params.giscus.repo }}
 <script src="https://giscus.app/client.js"
-        data-repo="rogueai/rogueai.github.io"
-        data-repo-id="MDEwOlJlcG9zaXRvcnk1NTI5NzQ3MQ=="
-        data-category="Posts"
-        data-category-id="DIC_kwDOA0vFv84B_j4i"
-        data-mapping="pathname"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-theme="transparent_dark"
-        data-lang="en"
+        data-repo={{ .Site.Params.giscus.repo }}
+        data-repo-id={{ .Site.Params.giscus.repo_id }}
+        data-category={{ .Site.Params.giscus.category }}
+        data-category-id={{ .Site.Params.giscus.category_id }}
+        data-mapping={{ .Site.Params.giscus.mapping }}
+        data-reactions-enabled={{ .Site.Params.giscus.reactions_enabled | default 0}}
+        data-emit-metadata={{ .Site.Params.giscus.emit_metadata | default 0 }}
+        data-theme={{ .Site.Params.giscus.theme }}
+        data-lang={{ .Site.Params.giscus.lang }}
         crossorigin="anonymous"
         async>
 </script>
+{{- end }}
