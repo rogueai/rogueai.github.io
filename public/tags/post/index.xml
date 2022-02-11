@@ -9,10 +9,10 @@
     <lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/tags/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Docker Compose on Synology NAS</title>
-      <link>https://rogueai.github.io/post/synology-docker-compose/</link>
+      <link>https://rogueai.github.io/posts/synology-docker-compose/</link>
       <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://rogueai.github.io/post/synology-docker-compose/</guid>
+      <guid>https://rogueai.github.io/posts/synology-docker-compose/</guid>
       <description>A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
  Install Docker package Make sure the docker network is allowed through the firewall:  Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall Add a custom rule  Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask     Create a scheduled task  Navigate to: System -&amp;gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.</description>
       <content>&lt;p&gt;A quick howto with the steps required to setup &lt;code&gt;docker&lt;/code&gt; and &lt;code&gt;docker-compose&lt;/code&gt; on Synology NAS:&lt;/p&gt;
