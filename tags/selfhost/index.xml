@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>selfhost on > RogueAI</title><link>https://rogueai.github.io/tags/selfhost/</link><description>Recent content in selfhost on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/tags/selfhost/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Compose on Synology NAS</title><link>https://rogueai.github.io/posts/synology-docker-compose/</link><pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/synology-docker-compose/</guid><description>A quick howto with the steps required to setup docker and docker-compose on Synology NAS:
+Install Docker package Make sure the docker network is allowed through the firewall: Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall Add a custom rule Ports: Add all your exposed container ports Protocol: TCP Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask Create a scheduled task Navigate to: System -&amp;gt; Task Scheduler Create a new task for user root In Task Settings, set a User-defined script docker-compose -f /volume1/docker/docker-compose.</description><content>&lt;p>A quick howto with the steps required to setup &lt;code>docker&lt;/code> and &lt;code>docker-compose&lt;/code> on Synology NAS:&lt;/p>
+&lt;ul>
+&lt;li>Install Docker package&lt;/li>
+&lt;li>Make sure the docker network is allowed through the firewall:
+&lt;ul>
+&lt;li>Navigate to: Control Panel -&amp;gt; Connectivity -&amp;gt; Security -&amp;gt; Firewall&lt;/li>
+&lt;li>Add a custom rule
+&lt;ul>
+&lt;li>Ports: Add all your exposed container ports&lt;/li>
+&lt;li>Protocol: TCP&lt;/li>
+&lt;li>Source IP: Specific IP -&amp;gt; Specify your docker network&amp;rsquo;s IP and subnet mask&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Create a scheduled task
+&lt;ul>
+&lt;li>Navigate to: System -&amp;gt; Task Scheduler&lt;/li>
+&lt;li>Create a new task for user &lt;code>root&lt;/code>&lt;/li>
+&lt;li>In Task Settings, set a User-defined script
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">docker-compose -f /volume1/docker/docker-compose.yml up -d
+&lt;/code>&lt;/pre>&lt;/div>Change the path to where your docker compose file is located&lt;/li>
+&lt;li>Set the task as disabled, and run it manually from the context menu&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></content></item></channel></rss>
