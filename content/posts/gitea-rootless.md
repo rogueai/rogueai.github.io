@@ -19,3 +19,4 @@ license = "cc-by-nc-sa-4.0"
   deprecated rsa algorithm
 - debug ssh with -vT to troubleshoot issues
   `ssh -vT git@<host> -p 2222`
+- TODO
