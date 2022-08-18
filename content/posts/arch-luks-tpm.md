@@ -1,8 +1,7 @@
 +++ 
 title = "Arch Linux: Dual boot with Secure Boot, LUKS unlocking via TPM2"
 date = 2022-08-18 
-description = "This post summarizes my current Arch setup involving a dual boot with Windows 10, Secure Boot, full disk 
-encryption with LUKS unlocked through TPM"
+description = "This post summarizes my current Arch setup involving a dual boot with Windows 10, Secure Boot, full disk encryption with LUKS unlocked through TPM"
 draft = false 
 toc = true 
 author = "rogueai"
