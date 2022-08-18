@@ -246,13 +246,13 @@ Now we can rebuild the EFI image with `mkinitcpio -P`
 > $ sbctl sign-all
 > ``` 
 
-### Enroll
+### Unlock the LUKS volume with TPM
 The last step before testing all out, is to enroll a key in the TPM to be used a LUKS authentication method:
 ``` 
 $ systemd-cryptenroll /dev/<luks-volume> --recovery-key
 $ systemd-cryptenroll /dev/<luks-volume> --tpm2-device=auto --tpm2-pcrs=0,7
 ```
-The first line will enroll a recovery keys as an alternative authentication method. Make sure you store it somewhere safe,
+The first line will create a recovery keys as an alternative authentication method. Make sure you store it somewhere safe,
 as this will be the only way to unlock your volume if either something happens to the TPM chip, or you need to disable
 Secure Boot for any reason.
 
