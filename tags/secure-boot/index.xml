@@ -156,7 +156,7 @@ Vendor Keys: microsoft
 &lt;/code>&lt;/pre>&lt;blockquote>
 &lt;p>If dual booting, you can now re-enable BitLocker. Bitlocker will generate a new recovery key, so make sure to take note of it.&lt;/p>
 &lt;/blockquote>
-&lt;h2 id="password-less-luks-unlocking">Password-less LUKS unlocking&lt;/h2>
+&lt;h2 id="unlock-the-luks-volume-with-tpm">Unlock the LUKS volume with TPM&lt;/h2>
 &lt;p>From a security point of view, passwordless LUKS unclocking might look like we&amp;rsquo;re giving up some security, as booting
 will go straight to login without asking any password whatsoever.
 We&amp;rsquo;re indeed trading a bit of security in favour of convenience, it&amp;rsquo;s important to note though that binding the LUKS to
@@ -200,7 +200,7 @@ hardware key. It&amp;rsquo;s also possible to setup a PIN in conjunction with th
 to re-sign all images with:&lt;/p>
 &lt;pre tabindex="0">&lt;code>$ sbctl sign-all
 &lt;/code>&lt;/pre>&lt;/blockquote>
-&lt;h3 id="unlock-the-luks-volume-with-tpm">Unlock the LUKS volume with TPM&lt;/h3>
+&lt;h3 id="enroll-the-luks-volume-with-the-tpm">Enroll the LUKS volume with the TPM&lt;/h3>
 &lt;p>The last step before testing all out, is to enroll a key in the TPM to be used a LUKS authentication method:&lt;/p>
 &lt;pre tabindex="0">&lt;code>$ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --recovery-key
 $ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --tpm2-device=auto --tpm2-pcrs=0,7
