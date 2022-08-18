@@ -190,7 +190,7 @@ Vendor Keys: microsoft
 
 > If dual booting, you can now re-enable BitLocker. Bitlocker will generate a new recovery key, so make sure to take note of it.
 
-## Password-less LUKS unlocking
+## Unlock the LUKS volume with TPM
 
 From a security point of view, passwordless LUKS unclocking might look like we're giving up some security, as booting 
 will go straight to login without asking any password whatsoever.
@@ -246,7 +246,7 @@ Now we can rebuild the EFI image with `mkinitcpio -P`
 > $ sbctl sign-all
 > ``` 
 
-### Unlock the LUKS volume with TPM
+### Enroll the LUKS volume with the TPM
 The last step before testing all out, is to enroll a key in the TPM to be used a LUKS authentication method:
 ``` 
 $ systemd-cryptenroll /dev/<luks-volume> --recovery-key
