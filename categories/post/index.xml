@@ -1,4 +1,249 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>post on > RogueAI</title><link>https://rogueai.github.io/categories/post/</link><description>Recent content in post on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Fri, 11 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/categories/post/index.xml" rel="self" type="application/rss+xml"/><item><title>`DRAFT` Videotel SIP TTM90</title><link>https://rogueai.github.io/posts/videotel/</link><pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/videotel/</guid><description>Background In the late 80s through early 90s, Videotel was the Italian equivalent of the French Minitel: a terminal that was able to access Teletext services, provided under a subscription fee.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>post on > RogueAI</title><link>https://rogueai.github.io/categories/post/</link><description>Recent content in post on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Thu, 18 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/categories/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Arch Linux: Dual boot with Secure Boot, LUKS unlocking via TPM2</title><link>https://rogueai.github.io/posts/arch-luks-tpm/</link><pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/arch-luks-tpm/</guid><description>Introduction I&amp;rsquo;ve been running Arch Linux for quite some time, but my original installation was far from being secure: I had no full disk encryption (FDE) and Secure Boot disabled, because at the time I thought I could live without any of that and avoiding extra steps in the installation process.
+Over time, I got more concerned over these aspects, especially since I&amp;rsquo;m using Arch on my work laptop. I managed to delay the inevitable by encrypting just my home directory with ecryptfs, but eventually I decided to deal with it and make a fresh installation with my ideal setup in mind, based on the information I collected over the years.</description><content>&lt;h1 id="introduction">Introduction&lt;/h1>
+&lt;p>I&amp;rsquo;ve been running Arch Linux for quite some time, but my original installation was far from being secure: I had no full disk
+encryption (FDE) and Secure Boot disabled, because at the time I thought I could live without any of that and avoiding extra
+steps in the installation process.&lt;/p>
+&lt;p>Over time, I got more concerned over these aspects, especially since I&amp;rsquo;m using Arch on my work laptop. I managed to delay
+the inevitable by encrypting &lt;em>just&lt;/em> my home directory with &lt;code>ecryptfs&lt;/code>, but eventually I decided to deal with it and make
+a fresh installation with my ideal setup in mind, based on the information I collected over the years.&lt;/p>
+&lt;p>This ideal setup consists in the following:&lt;/p>
+&lt;ul>
+&lt;li>rEFInd boot loader&lt;/li>
+&lt;li>Secure Boot&lt;/li>
+&lt;li>LUKS encryption&lt;/li>
+&lt;li>LUKS volume unlocking via TPM2 chip, without requiring a decryption password&lt;/li>
+&lt;li>Dual boot with Windows 10&lt;/li>
+&lt;/ul>
+&lt;p>For those of you familiar with Windows, this setup is essentially what you would find in a regular Window installation
+with BitLocker.&lt;/p>
+&lt;p>This post will go into the details of how to setup everything on a dual boot environment, but it should be applicable even
+on a standalone Arch install.&lt;/p>
+&lt;h1 id="installation">Installation&lt;/h1>
+&lt;p>I won&amp;rsquo;t go through the details of installing arch with LUKS, there are plenty of guides for that.
+I&amp;rsquo;m going however to highlight some details about the partition layout I chose, as it will be relevant later on.&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>ESP partition, mounted on &lt;code>/efi&lt;/code>: if dual booting, the ESP partition is probably already available, created by Windows.
+Otherwise, create an unencrypted FAT partition of about 500MB.&lt;/p>
+&lt;blockquote>
+&lt;p>Note: we&amp;rsquo;re going to be using EFI stubs instead of the usual *.img created by &lt;code>mkinitcpio&lt;/code>. These tend to get quite
+large so ensure your ESP partition is comfortably sized. Especially when dual booting on a OEM Windows laptop,
+vendors tend to be stingy on space: for instance I ended up resizing my own ESP partition from 200MB to 1GB.&lt;/p>
+&lt;/blockquote>
+&lt;p>At any rate, make sure the partition is unencrypted as rEFInd (or systemd-boot as far as I know) won&amp;rsquo;t be able to boot
+from an encrypted ESP.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Boot parition &lt;code>/boot&lt;/code>: I do not have a separate partition for &lt;code>/boot&lt;/code>. In fact, &lt;code>/boot&lt;/code> is actually encrypted inside
+the root LUKS volume. This is intended as we don&amp;rsquo;t want to expose any unsigned kernel to the boot process.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h1 id="securing-the-boot-process">Securing the boot process&lt;/h1>
+&lt;p>This is where the fun starts. Our system is now encrypted at rest, but with a few issues:&lt;/p>
+&lt;ul>
+&lt;li>Secure Boot is disabled: any malicious entity could potentially sneak in something fishy in the boot process.&lt;/li>
+&lt;li>Booting requires inputting two different passwords: the first one at boot time to unlock the LUKS volume, the second to
+login&lt;/li>
+&lt;li>The LUKS password is either very secure, but tedious to remember and input, or too fragile leaving us exposed to brute
+force attacks.&lt;/li>
+&lt;/ul>
+&lt;p>We&amp;rsquo;re going to solve all these problems in two steps:&lt;/p>
+&lt;ul>
+&lt;li>Securing the boot phase with Secure Boot&lt;/li>
+&lt;li>Unlocking the LUKS volume with a key stored in the TPM chip and bound to the Secure Boot state.&lt;/li>
+&lt;/ul>
+&lt;h2 id="enabling-secure-boot">Enabling Secure Boot&lt;/h2>
+&lt;p>We&amp;rsquo;ll be bundling in a single EFI image the kernel, modules, parameters, initramfs and microcode. The EFI image will be
+signed with our own keys, which essentially means: nothing will be able to boot unless is signed with our custom keys.&lt;/p>
+&lt;blockquote>
+&lt;p>Warning: this also includes any live usb like Archiso or Ventoy.&lt;/p>
+&lt;p>A special note on Venoty: Ventoy supports Secure Boot by allowing users to enroll its own certificate using the MokManager.
+&lt;a href="https://github.com/ventoy/Ventoy/issues/135">There is an open security issue&lt;/a> whereas after passing the Secure Boot check,
+Ventoy allows any of the isntalled ISOs to be booted, without any extra check. As mentioned in the GitHub issue, this
+essentially negates any Secure Boot protection, as once Ventoy&amp;rsquo;s cert is enrolled in the MOK, anybody could load a Ventoy
+USB stick into your laptop and boot anything from it.&lt;/p>
+&lt;p>For this reason, I strongly recommend to avoid adding Ventoy cert in the MokManager.&lt;/p>
+&lt;/blockquote>
+&lt;p>To create EFI images and sign them, we&amp;rsquo;re going to need:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>mkinitcpio&lt;/code> v31 or later&lt;/li>
+&lt;li>&lt;a href="https://github.com/Foxboron/sbctl">sbctl&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h3 id="create-efi-images-with-mkinitcpio">Create EFI images with &lt;code>mkinitcpio&lt;/code>&lt;/h3>
+&lt;p>The process to create signed EFI bundles used to be quite convoluted, requiring to ditch &lt;code>mkinitcpio&lt;/code> in favour of other
+tools supporting EFI bundles like &lt;code>dracut&lt;/code>. Recently though mkinitcpio &lt;a href="https://linderud.dev/blog/mkinitcpio-v31-and-uefi-stubs/">introduced support for EFI generation&lt;/a>
+so this is now quite straightforward.&lt;/p>
+&lt;p>Edit your &lt;code>/etc/mkinitcpio.d/linux.preset&lt;/code> to look like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code># mkinitcpio preset file for the &amp;#39;linux&amp;#39; package
+ALL_config=&amp;#34;/etc/mkinitcpio.conf&amp;#34;
+ALL_kver=&amp;#34;/boot/vmlinuz-linux&amp;#34;
+ALL_microcode=(/boot/*-ucode.img)
+PRESETS=(&amp;#39;default&amp;#39;)
+default_image=&amp;#34;/boot/initramfs-linux.img&amp;#34;
+default_efi_image=&amp;#34;/efi/EFI/arch/arch-linux.efi&amp;#34;
+default_options=&amp;#34;--splash /usr/share/systemd/bootctl/splash-arch.bmp&amp;#34;
+# other presets ...
+&lt;/code>&lt;/pre>&lt;p>If you have any Kernel parameters that used to be added to the bootloader config, they now need to be bundled into the EFI image as well.&lt;/p>
+&lt;p>By default
+&lt;code>mkinitcpio&lt;/code> will bundle &lt;code>/etc/kernel/cmdline&lt;/code> when generating the EFI, but it can be configured adding &lt;code>--cmdline /path/to/kernel/cmdline&lt;/code>
+to the preset options if required.&lt;/p>
+&lt;p>And that&amp;rsquo;s it! Running &lt;code>mkinitcpio -p linux&lt;/code> will now generate the EFI images into &lt;code>/efi/EFI/arch/*.efi&lt;/code>.&lt;/p>
+&lt;h3 id="signing-efi-images">Signing EFI images&lt;/h3>
+&lt;p>Another process that used to be rather manual and error prone is now greatly simplified by the excellent project &lt;a href="https://github.com/Foxboron/sbctl">sbctl&lt;/a>.
+From the project page:&lt;/p>
+&lt;blockquote>
+&lt;p>sbctl intends to be a user-friendly secure boot key manager capable of setting up secure boot, offer key management
+capabilities, and keep track of files that needs to be signed in the boot chain.&lt;/p>
+&lt;/blockquote>
+&lt;p>The first thing we need to do is enable Secure Boot in &amp;ldquo;Setup Mode&amp;rdquo;. Reboot into the BIOS config utility and there
+should be an option for that. I had it under &amp;ldquo;Security -&amp;gt; Secure Boot&amp;rdquo;&lt;/p>
+&lt;blockquote>
+&lt;p>A note of caution: enabling Setup Mode will clear all the keys currently stored, including Microsoft and vendor ones&lt;/p>
+&lt;/blockquote>
+&lt;p>Reboot again and check that Setup Mode is enabled with:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ sbctl status
+Installed: ✓ sbctl is installed
+Owner GUID: &amp;lt;GUID&amp;gt;
+Setup Mode: ✗ Enabled
+Secure Boot: ✗ Disabled
+&lt;/code>&lt;/pre>&lt;p>At this point we can create a new set of keys and enroll them:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ sbctl create-keys
+$ sbctl enroll-keys --microsoft
+&lt;/code>&lt;/pre>&lt;p>For reference, &lt;code>sbctl&lt;/code> places generated keys &lt;code>/usr/share/secureboot&lt;/code>. It&amp;rsquo;s probably a good idea to back them up to a
+safe location.&lt;/p>
+&lt;p>We can now start signing our EFI images, including:&lt;/p>
+&lt;ul>
+&lt;li>Any *.efi generated by &lt;code>mkinitcpio&lt;/code> presets&lt;/li>
+&lt;li>Bootloader image(s)&lt;/li>
+&lt;li>If using &lt;code>fwupd&lt;/code>, sign its efi as well&lt;/li>
+&lt;li>Vendor images, such as Lenovo recovery EFI&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>$ sbctl sign -s /efi/EFI/arch/arch-linux.efi
+$ sbctl sign -s /efi/EFI/refind/refind_x64.efi
+$ sbctl sign -s /efi/EFI/refind/drivers_x64/ext4_x64.efi
+$ sbctl sign -s /efi/EFI/refind/drivers_x64/btrfs_x64.efi
+$ sbctl sign -s /efi/EFI/arch/fwupdx64.efi
+$ sbctl sign -s /efi/EFI/Boot/LenovoBT.EFI
+&lt;/code>&lt;/pre>&lt;p>With the &lt;code>-s&lt;/code> option, &lt;code>sbctl&lt;/code> keeps track every EFI it signed to its own database: they will be automatically signed at
+every kernel change detected with a pacman hook.&lt;/p>
+&lt;blockquote>
+&lt;p>Note on dual boot with Windows: with the &lt;code>--microsoft&lt;/code> option, &lt;code>sbctl&lt;/code> enrolls the official Microsoft keys. You don&amp;rsquo;t
+need to sign any Microsoft EFI as they&amp;rsquo;ll work out of the box as if nothing changed. It is still possible to double-sign
+with both their keys and your own ones, &lt;a href="https://github.com/Foxboron/sbctl/wiki/Linux-Windows-Dual-Boot-with-Windows-Bitlocker">but in some cases that might cause issues&lt;/a>&lt;/p>
+&lt;p>Personally, I decided to leave them as-is to avoid trouble.&lt;/p>
+&lt;/blockquote>
+&lt;p>We can verify the signing worked:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ sbctl verify
+Verifying file database and EFI images in /efi...
+✓ /efi/EFI/arch/arch-linux.efi is signed
+✓ /efi/EFI/arch/fwupdx64.efi is signed
+✓ /efi/EFI/refind/drivers_x64/btrfs_x64.efi is signed
+✓ /efi/EFI/refind/drivers_x64/ext4_x64.efi is signed
+✓ /efi/EFI/refind/refind_x64.efi is signed
+✓ /efi/EFI/Boot/LenovoBT.EFI is signed
+&lt;/code>&lt;/pre>&lt;p>&lt;code>sbctl&lt;/code> is smart enough to find the esp partition and checks every EFI it finds. If you&amp;rsquo;re dual booting and you didn&amp;rsquo;t
+double-sign MS EFIS, they will show up as not signed, but that&amp;rsquo;s not an issue: they&amp;rsquo;re still signed with the original MS
+keys.&lt;/p>
+&lt;p>We can now reboot and we should be now in Secure Boot mode. rEFInd should be able to find our signed EFI and happily boot
+from it.&lt;/p>
+&lt;p>We can also verify the new Secure Boot state:&lt;/p>
+&lt;pre tabindex="0">&lt;code>❯ sbctl status
+Installed: ✓ sbctl is installed
+Owner GUID: &amp;lt;GUID&amp;gt;
+Setup Mode: ✓ Disabled
+Secure Boot: ✓ Enabled
+Vendor Keys: microsoft
+&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;p>If dual booting, you can now re-enable BitLocker. Bitlocker will generate a new recovery key, so make sure to take note of it.&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="password-less-luks-unlocking">Password-less LUKS unlocking&lt;/h2>
+&lt;p>From a security point of view, passwordless LUKS unclocking might look like we&amp;rsquo;re giving up some security, as booting
+will go straight to login without asking any password whatsoever.
+We&amp;rsquo;re indeed trading a bit of security in favour of convenience, it&amp;rsquo;s important to note though that binding the LUKS to
+the TPM ensures the volume will only unlock in our machine, with Secure Boot enabled and our signed boot image.&lt;/p>
+&lt;p>Anything else will result in the LUKS not to unlock, requiring another authentication method. We&amp;rsquo;ll be setting up a
+highly secure recovery key as an alternative unlocking method, which is arguably much better than a potentially weak password.&lt;/p>
+&lt;p>Now for the last part of this setup we&amp;rsquo;re going to need:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>mkinitcpio&lt;/code>&lt;/li>
+&lt;li>&lt;code>systemd-cryptenroll&lt;/code> for its native support for enrolling keys in TPM for LUKS volume unlocking&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>systemd-cryptenroll&lt;/code> provides a handy way to setup different authentication mechanisms to unlock our LUKS volume. Paired
+with &lt;code>mkinitcpio&lt;/code> systemd init hooks, it allows for seamless TPM integration.&lt;/p>
+&lt;h3 id="preparing-the-efi-image">Preparing the EFI image&lt;/h3>
+&lt;p>We&amp;rsquo;re going to have to make some changes on our &lt;code>mkinitcpio&lt;/code> build config, but first of all check the TPM version:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ systemd-cryptenroll --tpm2-device=list
+PATH DEVICE DRIVER
+/dev/tpmrm0 NTC0702:00 tpm_tis
+&lt;/code>&lt;/pre>&lt;p>Take note of the driver name: &lt;code>tpm_tis&lt;/code>, and add it to the MODULES list in &lt;code>/etc/mkinitcio.conf&lt;/code> &lt;a href="https://wiki.archlinux.org/title/Trusted_Platform_Module#systemd-cryptenroll">according to the Arch wiki&lt;/a>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>...
+MODULES=(i915 tpm_tis)
+...
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)
+&lt;/code>&lt;/pre>&lt;p>Apart from the extra &lt;code>MODULE&lt;/code>, if you&amp;rsquo;re using the regular busybox &lt;code>encrypt&lt;/code> hook, you need to switch to the systemd
+&lt;code>sd-encrypt&lt;/code> one. Note that switching to &lt;code>systemd&lt;/code> init hooks requires other hooks to be replaced. For example &lt;code>udev&lt;/code>,
+&lt;code>usr&lt;/code> and &lt;code>resume&lt;/code> are all replaced by the &lt;code>systemd&lt;/code> hook as explained in the &lt;a href="https://wiki.archlinux.org/title/Mkinitcpio#Runtime_hooks">mkinitcpio runtime hook section&lt;/a>
+in the Arch Wiki.&lt;/p>
+&lt;p>Switching to &lt;code>sd-necrypt&lt;/code> means we also need to tweak the Kernel parameters in &lt;code>/etc/kernel/cmdline&lt;/code>.
+These are my current kernel options, for a BTRFS partition on LUKS:&lt;/p>
+&lt;pre tabindex="0">&lt;code>rd.luks.name=&amp;lt;UUID&amp;gt;=root rd.luks.options=tpm2-device=auto root=/dev/mapper/root rootflags=subvol=@ rw add_efi_memmap
+&lt;/code>&lt;/pre>&lt;p>The important bits are:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>rd.luks.name&lt;/code> same as &lt;code>cryptdevice&lt;/code>&lt;/li>
+&lt;li>&lt;code>rd.luks.options=tpm2-device=auto&lt;/code>: enables unlocking through a key enrolled in the TPM&lt;/li>
+&lt;/ul>
+&lt;p>There are also several other options as backup authentication method: such as a FIDO2
+hardware key. It&amp;rsquo;s also possible to setup a PIN in conjunction with the TPM unlocking.&lt;/p>
+&lt;p>Now we can rebuild the EFI image with &lt;code>mkinitcpio -P&lt;/code>&lt;/p>
+&lt;blockquote>
+&lt;p>Important note: &lt;code>sbctl&lt;/code> only re-signs EFIs on pacman operations, when building them manually via &lt;code>mkinitcpio&lt;/code>, make sure
+to re-sign all images with:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ sbctl sign-all
+&lt;/code>&lt;/pre>&lt;/blockquote>
+&lt;h3 id="enroll">Enroll&lt;/h3>
+&lt;p>The last step before testing all out, is to enroll a key in the TPM to be used a LUKS authentication method:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --recovery-key
+$ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --tpm2-device=auto --tpm2-pcrs=0,7
+&lt;/code>&lt;/pre>&lt;p>The first line will enroll a recovery keys as an alternative authentication method. Make sure you store it somewhere safe,
+as this will be the only way to unlock your volume if either something happens to the TPM chip, or you need to disable
+Secure Boot for any reason.&lt;/p>
+&lt;p>The second line enrolls the TPM key as authentication method, binding it to the Platform Configuration Registers (PCR) #0 and #7.&lt;/p>
+&lt;p>There are &lt;a href="https://wiki.archlinux.org/title/Trusted_Platform_Module#Accessing_PCR_registers">a number of registers available&lt;/a>
+in the TPM, and you can enroll the key to multiple ones, but at the bare minimum you should be using register #7, the
+&amp;ldquo;Secure Boot State&amp;rdquo;. In plain terms, it will unlock the LUKS volume if the Secure Boot checks passes. As we signed all
+our EFIs, this means we won&amp;rsquo;t need to worry about re-enrolling LUKS keys in the TPM as long as Secure Boot is operational.&lt;/p>
+&lt;p>It&amp;rsquo;s a good idea to enroll the key to PCR #0 &amp;ldquo;Core System Firmware executable code&amp;rdquo;, but that means every time the firmware
+gets updates in the BIOS, we need to unlock the volume with the recovery-key and re-run &lt;code>systemd-cryptenroll&lt;/code> for the
+TPM-based authentication method.&lt;/p>
+&lt;p>Now we can reboot and test that everything works as expected, you should get straight to user login. It&amp;rsquo;s worth testing
+that disabling Secure Boot, we get requested for a decryption password.&lt;/p>
+&lt;blockquote>
+&lt;p>Important: make sure you have your recovery key stored somewhere at this point!&lt;/p>
+&lt;/blockquote>
+&lt;p>If everything checks out, we can wipe the password slot, effectively rendering the recovery key the only backup authentication
+method:&lt;/p>
+&lt;pre tabindex="0">&lt;code>$ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --wipe-slot=password
+&lt;/code>&lt;/pre>&lt;p>The last thing to note about &lt;code>systemd-cryptenroll&lt;/code>, is that there are several other interesting authentication methods
+available, such as FIDO2 hardware tokens like YubiKeys.&lt;/p>
+&lt;h1 id="conclusion">Conclusion&lt;/h1>
+&lt;p>That&amp;rsquo;s it! I hope you found this useful :)&lt;/p>
+&lt;p>There&amp;rsquo;s definitely something that could be improved in this setup, but I&amp;rsquo;m quite happy so far with the result. I&amp;rsquo;m still
+working on solving some open issues, like building my own custom &lt;a href="https://wiki.archlinux.org/title/Archiso">Archiso&lt;/a> producing
+EFIs signed with my own keys, but that&amp;rsquo;s going to be something for another post!&lt;/p>
+&lt;h1 id="references-and-further-reading">References and further reading&lt;/h1>
+&lt;p>In no particular order, my approach has been put together using the following resources:&lt;/p>
+&lt;ol>
+&lt;li>&lt;a href="https://gist.github.com/chrisx8/cda23e2d1fa3dcda0d739bc74f600175">Decrypt LUKS2-encrypted root partitions with TPM2&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://lunaryorn.com/install-arch-with-secure-boot-tpm2-based-luks-encryption-and-systemd-homed">Install Arch with Secure boot, TPM2-based LUKS encryption, and systemd-homed&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://0pointer.net/blog/authenticated-boot-and-disk-encryption-on-linux.html">Authenticated Boot and Disk Encryption on Linux&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://linderud.dev/blog/mkinitcpio-v31-and-uefi-stubs/">mkinitcpio v31 and UEFI stubs&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/Foxboron/sbctl/wiki/Linux-Windows-Dual-Boot-with-Windows-Bitlocker">Linux Windows Dual Boot with Windows Bitlocker&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Trusted_Platform_Module#systemd-cryptenroll">Arch Wiki: Trusted Platform Module&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot">Arch Wiki: Unified Extensible Firmware Interface/Secure Boot&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Mkinitcpio">Arch Wiki: mkinitcpio&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#Configuring_mkinitcpio">Arch Wiki: dm-crypt/Encrypting an entire system - Configuring mkinitcpio&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://wiki.archlinux.org/title/Dm-crypt/System_configuration#Kernel_parameters">Arch Wiki: System configuration - Kernel parameters&lt;/a>&lt;/li>
+&lt;/ol></content></item><item><title>`DRAFT` Videotel SIP TTM90</title><link>https://rogueai.github.io/posts/videotel/</link><pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/videotel/</guid><description>Background In the late 80s through early 90s, Videotel was the Italian equivalent of the French Minitel: a terminal that was able to access Teletext services, provided under a subscription fee.
 While in France the Minitel got quite popular, with services still active in the early 2000s, in Italy it never got to the same level of adoption, both for the subscription being quite expensive and a number of legal issues that arose among the companies involved.</description><content>&lt;h1 id="background">Background&lt;/h1>
 &lt;p>In the late 80s through early 90s, Videotel was the Italian equivalent of the French Minitel: a terminal that was able
 to access Teletext services, provided under a subscription fee.&lt;/p>
@@ -35,8 +280,8 @@ Install Docker package Make sure the docker network is allowed through the firew
 &lt;li>Navigate to: System -&amp;gt; Task Scheduler&lt;/li>
 &lt;li>Create a new task for user &lt;code>root&lt;/code>&lt;/li>
 &lt;li>In Task Settings, set a User-defined script
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">docker-compose -f /volume1/docker/docker-compose.yml up -d
-&lt;/code>&lt;/pre>&lt;/div>Change the path to where your docker compose file is located&lt;/li>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker-compose -f /volume1/docker/docker-compose.yml up -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>Change the path to where your docker compose file is located&lt;/li>
 &lt;li>Set the task as disabled, and run it manually from the context menu&lt;/li>
 &lt;/ul>
 &lt;/li>

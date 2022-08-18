@@ -19,8 +19,8 @@ Install Docker package Make sure the docker network is allowed through the firew
 &lt;li>Navigate to: System -&amp;gt; Task Scheduler&lt;/li>
 &lt;li>Create a new task for user &lt;code>root&lt;/code>&lt;/li>
 &lt;li>In Task Settings, set a User-defined script
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">docker-compose -f /volume1/docker/docker-compose.yml up -d
-&lt;/code>&lt;/pre>&lt;/div>Change the path to where your docker compose file is located&lt;/li>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker-compose -f /volume1/docker/docker-compose.yml up -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>Change the path to where your docker compose file is located&lt;/li>
 &lt;li>Set the task as disabled, and run it manually from the context menu&lt;/li>
 &lt;/ul>
 &lt;/li>
