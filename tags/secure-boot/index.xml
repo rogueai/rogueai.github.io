@@ -200,11 +200,11 @@ hardware key. It&amp;rsquo;s also possible to setup a PIN in conjunction with th
 to re-sign all images with:&lt;/p>
 &lt;pre tabindex="0">&lt;code>$ sbctl sign-all
 &lt;/code>&lt;/pre>&lt;/blockquote>
-&lt;h3 id="enroll">Enroll&lt;/h3>
+&lt;h3 id="unlock-the-luks-volume-with-tpm">Unlock the LUKS volume with TPM&lt;/h3>
 &lt;p>The last step before testing all out, is to enroll a key in the TPM to be used a LUKS authentication method:&lt;/p>
 &lt;pre tabindex="0">&lt;code>$ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --recovery-key
 $ systemd-cryptenroll /dev/&amp;lt;luks-volume&amp;gt; --tpm2-device=auto --tpm2-pcrs=0,7
-&lt;/code>&lt;/pre>&lt;p>The first line will enroll a recovery keys as an alternative authentication method. Make sure you store it somewhere safe,
+&lt;/code>&lt;/pre>&lt;p>The first line will create a recovery keys as an alternative authentication method. Make sure you store it somewhere safe,
 as this will be the only way to unlock your volume if either something happens to the TPM chip, or you need to disable
 Secure Boot for any reason.&lt;/p>
 &lt;p>The second line enrolls the TPM key as authentication method, binding it to the Platform Configuration Registers (PCR) #0 and #7.&lt;/p>
