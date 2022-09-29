@@ -3,7 +3,7 @@ title = "PyCharm: Debug script or module with `sudo` privileges"
 date = 2022-09-29
 description = "A quick rundown on how to debug a python module to be ran with `sudo` in PyCharm"
 draft = false
-toc = true
+toc = false
 author = "rogueai"
 categories = ["post"]
 tags = ["python", "pycharm", "debug"]
@@ -22,10 +22,13 @@ not working, or just cumbersome to setup.
 
 We'll be using a local  Python Debug Server for this approach
 
-- Create a new Python remote debug server configuration[^1]
+- Create a new Python remote debug server configuration [^1]
 - Leave `localhost` as the *IDE host name*
 - Set a port, e.g.: `2345`
-- Install `pydevd-pycharm`: `pip install pydevd-pycharm~=<version of PyCharm on the local machine>`
+- Install `pydevd-pycharm`: 
+  ```
+  pip install pydevd-pycharm~=<version of PyCharm on the local machine>
+  ```
   You can find your PyCharm's version from *Help -> About*, it's something like `#PY-<version>`. The install command can
   also be copied from the remote server configuration dialog.
 - Add this to your main (can be copied from the remote server configuration dialog as well):
@@ -40,4 +43,4 @@ We'll be using a local  Python Debug Server for this approach
 
 That's it!
 
-[^1] https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config
+[^1]: https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config
