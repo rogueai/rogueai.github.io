@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on > RogueAI</title><link>https://rogueai.github.io/posts/</link><description>Recent content in Posts on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Thu, 18 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Arch Linux: Dual boot with Secure Boot, LUKS unlocking via TPM2</title><link>https://rogueai.github.io/posts/arch-luks-tpm/</link><pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/arch-luks-tpm/</guid><description>Introduction I&amp;rsquo;ve been running Arch Linux for quite some time, but my original installation was far from being secure: I had no full disk encryption (FDE) and Secure Boot disabled, because at the time I thought I could live without any of that and avoiding extra steps in the installation process.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on > RogueAI</title><link>https://rogueai.github.io/posts/</link><description>Recent content in Posts on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Thu, 29 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>PyCharm: Debug script or module with `sudo` privileges</title><link>https://rogueai.github.io/posts/pycharm-sudo/</link><pubDate>Thu, 29 Sep 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/pycharm-sudo/</guid><description>I was trying to debug a python module using PyCharm, however the module requires sudo to run and it seems it&amp;rsquo;s not possible to set a custom python command to be run in the default interpreter configuration.
+I tried following different approaches (see: here and here), but they were either not working, or just cumbersome to setup.
+Disclaimer: this approach requires PyCharm Professional
+We&amp;rsquo;ll be using a local Python Debug Server for this approach</description><content>&lt;p>I was trying to debug a python module using PyCharm, however the module requires sudo to run and
+it seems it&amp;rsquo;s not possible to set a custom python command to be run in the default interpreter
+configuration.&lt;/p>
+&lt;p>I tried following different approaches (see: &lt;a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/206587695-How-to-run-debug-programs-with-super-user-privileges?page=1#community_comment_205675625">here&lt;/a>
+and &lt;a href="https://esmithy.net/2015/05/05/rundebug-as-root-in-pycharm/">here&lt;/a>), but they were either
+not working, or just cumbersome to setup.&lt;/p>
+&lt;blockquote>
+&lt;p>Disclaimer: this approach requires PyCharm Professional&lt;/p>
+&lt;/blockquote>
+&lt;p>We&amp;rsquo;ll be using a local Python Debug Server for this approach&lt;/p>
+&lt;ul>
+&lt;li>Create a new Python remote debug server configuration[^1]&lt;/li>
+&lt;li>Leave &lt;code>localhost&lt;/code> as the &lt;em>IDE host name&lt;/em>&lt;/li>
+&lt;li>Set a port, e.g.: &lt;code>2345&lt;/code>&lt;/li>
+&lt;li>Install &lt;code>pydevd-pycharm&lt;/code>: &lt;code>pip install pydevd-pycharm~=&amp;lt;version of PyCharm on the local machine&amp;gt;&lt;/code>
+You can find your PyCharm&amp;rsquo;s version from &lt;em>Help -&amp;gt; About&lt;/em>, it&amp;rsquo;s something like &lt;code>#PY-&amp;lt;version&amp;gt;&lt;/code>. The install command can
+also be copied from the remote server configuration dialog.&lt;/li>
+&lt;li>Add this to your main (can be copied from the remote server configuration dialog as well):
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>pydevd_pycharm&lt;span style="color:#f92672">.&lt;/span>settrace(&lt;span style="color:#e6db74">&amp;#39;localhost&amp;#39;&lt;/span>, port&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2345&lt;/span>, stdoutToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>, stderrToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>Start the debug server and set breakpoints&lt;/li>
+&lt;li>From a terminal, start your script with &lt;code>sudo&lt;/code>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>sudo python -m your_module
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;p>That&amp;rsquo;s it!&lt;/p>
+&lt;p>[^1] &lt;a href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config">https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config&lt;/a>&lt;/p></content></item><item><title>Arch Linux: Dual boot with Secure Boot, LUKS unlocking via TPM2</title><link>https://rogueai.github.io/posts/arch-luks-tpm/</link><pubDate>Thu, 18 Aug 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/arch-luks-tpm/</guid><description>Introduction I&amp;rsquo;ve been running Arch Linux for quite some time, but my original installation was far from being secure: I had no full disk encryption (FDE) and Secure Boot disabled, because at the time I thought I could live without any of that and avoiding extra steps in the installation process.
 Over time, I got more concerned over these aspects, especially since I&amp;rsquo;m using Arch on my work laptop. I managed to delay the inevitable by encrypting just my home directory with ecryptfs, but eventually I decided to deal with it and make a fresh installation with my ideal setup in mind, based on the information I collected over the years.</description><content>&lt;h1 id="introduction">Introduction&lt;/h1>
 &lt;p>I&amp;rsquo;ve been running Arch Linux for quite some time, but my original installation was far from being secure: I had no full disk
 encryption (FDE) and Secure Boot disabled, because at the time I thought I could live without any of that and avoiding extra
