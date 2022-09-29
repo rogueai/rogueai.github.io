@@ -12,11 +12,12 @@ not working, or just cumbersome to setup.&lt;/p>
 &lt;/blockquote>
 &lt;p>We&amp;rsquo;ll be using a local Python Debug Server for this approach&lt;/p>
 &lt;ul>
-&lt;li>Create a new Python remote debug server configuration[^1]&lt;/li>
+&lt;li>Create a new Python remote debug server configuration &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/li>
 &lt;li>Leave &lt;code>localhost&lt;/code> as the &lt;em>IDE host name&lt;/em>&lt;/li>
 &lt;li>Set a port, e.g.: &lt;code>2345&lt;/code>&lt;/li>
-&lt;li>Install &lt;code>pydevd-pycharm&lt;/code>: &lt;code>pip install pydevd-pycharm~=&amp;lt;version of PyCharm on the local machine&amp;gt;&lt;/code>
-You can find your PyCharm&amp;rsquo;s version from &lt;em>Help -&amp;gt; About&lt;/em>, it&amp;rsquo;s something like &lt;code>#PY-&amp;lt;version&amp;gt;&lt;/code>. The install command can
+&lt;li>Install &lt;code>pydevd-pycharm&lt;/code>:
+&lt;pre tabindex="0">&lt;code>pip install pydevd-pycharm~=&amp;lt;version of PyCharm on the local machine&amp;gt;
+&lt;/code>&lt;/pre>You can find your PyCharm&amp;rsquo;s version from &lt;em>Help -&amp;gt; About&lt;/em>, it&amp;rsquo;s something like &lt;code>#PY-&amp;lt;version&amp;gt;&lt;/code>. The install command can
 also be copied from the remote server configuration dialog.&lt;/li>
 &lt;li>Add this to your main (can be copied from the remote server configuration dialog as well):
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>pydevd_pycharm&lt;span style="color:#f92672">.&lt;/span>settrace(&lt;span style="color:#e6db74">&amp;#39;localhost&amp;#39;&lt;/span>, port&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2345&lt;/span>, stdoutToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>, stderrToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>)
@@ -27,4 +28,11 @@ also be copied from the remote server configuration dialog.&lt;/li>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;/ul>
 &lt;p>That&amp;rsquo;s it!&lt;/p>
-&lt;p>[^1] &lt;a href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config">https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config&lt;/a>&lt;/p></content></item></channel></rss>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config">https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html#remote-debug-config&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></content></item></channel></rss>
