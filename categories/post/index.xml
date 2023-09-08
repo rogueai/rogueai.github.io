@@ -1,4 +1,50 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>post on > RogueAI</title><link>https://rogueai.github.io/categories/post/</link><description>Recent content in post on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Thu, 29 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/categories/post/index.xml" rel="self" type="application/rss+xml"/><item><title>PyCharm: Debug script or module with `sudo` privileges</title><link>https://rogueai.github.io/posts/pycharm-sudo/</link><pubDate>Thu, 29 Sep 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/pycharm-sudo/</guid><description>I was trying to debug a python module using PyCharm, however the module requires sudo to run and it seems it&amp;rsquo;s not possible to set a custom python command to be run in the default interpreter configuration.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>post on > RogueAI</title><link>https://rogueai.github.io/categories/post/</link><description>Recent content in post on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Fri, 08 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/categories/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Proton VPN on FritzBox routers</title><link>https://rogueai.github.io/posts/proton-vpn-fritzbox/</link><pubDate>Fri, 08 Sep 2023 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/proton-vpn-fritzbox/</guid><description>With FritzBox now supporting WireGuard from FirtzOS version 7.50 1, I wondered if it would be possible for it to be setup as Proton VPN client. Unfortunately, it seems the new feature is only intended to be used as a way to allow for external access into the local network. For this reason, the router requires either DynDns settings or FritzBox Account to be configure.
+I had neither, and only wanted to tunnel all traffic through WireGuard/Proton VPN.</description><content>&lt;p>With FritzBox now supporting WireGuard from FirtzOS version 7.50 &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, I wondered if it would be possible for it to be setup as Proton VPN client.
+Unfortunately, it seems the new feature is only intended to be used as a way to allow for external access into the local network. For this reason, the router requires either DynDns settings or FritzBox Account to be configure.&lt;/p>
+&lt;p>I had neither, and only wanted to tunnel all traffic through WireGuard/Proton VPN. I&amp;rsquo;m basing this guide on this Reddit post: &lt;a href="https://www.reddit.com/r/fritzbox/comments/ymshoj/tutorialworkaround_how_to_use_fritzbox_wireguard/">https://www.reddit.com/r/fritzbox/comments/ymshoj/tutorialworkaround_how_to_use_fritzbox_wireguard/&lt;/a>&lt;/p>
+&lt;h2 id="my-setup">My setup&lt;/h2>
+&lt;ul>
+&lt;li>FritzBox 4040&lt;/li>
+&lt;li>Proton VPN, although it should probably work for any VPN service supporting WireGuard&lt;/li>
+&lt;/ul>
+&lt;h2 id="steps">Steps&lt;/h2>
+&lt;ul>
+&lt;li>From Proton VPN: create a download a new WireGuard configuration for routers&lt;/li>
+&lt;li>Access FritzBox &amp;gt; Internet &amp;gt; Permit Access &amp;gt; DynDNS
+&lt;ul>
+&lt;li>Select &amp;ldquo;Use DynDNS&amp;rdquo;&lt;/li>
+&lt;li>Update URL: &lt;a href="http://httpstat.us/200?user=&amp;amp;password=&amp;amp;host=&amp;amp;ip=&amp;amp;ip6=">http://httpstat.us/200?user=&amp;amp;password=&amp;amp;host=&amp;amp;ip=&amp;amp;ip6=&lt;/a>&lt;/li>
+&lt;li>Domain name: &lt;code>localhost.local&lt;/code> (it doesn&amp;rsquo;t need to be an existing domain name)&lt;/li>
+&lt;li>Username: anything&lt;/li>
+&lt;li>Password: anything&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Access FritzBox &amp;gt; Internet &amp;gt; Permis Access &amp;gt; VPN (WireGuard)
+&lt;ul>
+&lt;li>Select &lt;code>Add Connection&lt;/code>&lt;/li>
+&lt;li>Select &lt;code>Connect networks or establish special connections&lt;/code>, &lt;code>Next&lt;/code>&lt;/li>
+&lt;li>Select &lt;code>Yes&lt;/code> on &lt;code>Has this WireGuard connection already been set up at the remote connection?&lt;/code>, &lt;code>Next&lt;/code>&lt;/li>
+&lt;li>Provide a name for the connection&lt;/li>
+&lt;li>Upload the exported Proton VPN WireGuard&lt;/li>
+&lt;li>Select &lt;code>Send all IPv4 network traffic via the VPN connection&lt;/code>&lt;/li>
+&lt;li>(Optional) Select &lt;code>Only certain devices in the home network are to be accessible over this WireGuard® connection&lt;/code>&lt;/li>
+&lt;li>&lt;code>Finish&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>And we are done!&lt;/p>
+&lt;blockquote>
+&lt;p>Note that this won&amp;rsquo;t allow any external access into the network.
+The &lt;code>httpstat.us&lt;/code> service can be self hosted for increased privacy.&lt;/p>
+&lt;/blockquote>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.avm.de/service/vpn/connecting-the-fritzbox-to-a-vpn-provider-via-wireguard/">https://en.avm.de/service/vpn/connecting-the-fritzbox-to-a-vpn-provider-via-wireguard/&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></content></item><item><title>PyCharm: Debug script or module with `sudo` privileges</title><link>https://rogueai.github.io/posts/pycharm-sudo/</link><pubDate>Thu, 29 Sep 2022 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/pycharm-sudo/</guid><description>I was trying to debug a python module using PyCharm, however the module requires sudo to run and it seems it&amp;rsquo;s not possible to set a custom python command to be run in the default interpreter configuration.
 I tried following different approaches (see: here and here), but they were either not working, or just cumbersome to setup.
 Disclaimer: this approach requires PyCharm Professional
 We&amp;rsquo;ll be using a local Python Debug Server for this approach</description><content>&lt;p>I was trying to debug a python module using PyCharm, however the module requires sudo to run and
@@ -16,8 +62,8 @@ not working, or just cumbersome to setup.&lt;/p>
 &lt;li>Leave &lt;code>localhost&lt;/code> as the &lt;em>IDE host name&lt;/em>&lt;/li>
 &lt;li>Set a port, e.g.: &lt;code>2345&lt;/code>&lt;/li>
 &lt;li>Install &lt;code>pydevd-pycharm&lt;/code>:
-&lt;pre tabindex="0">&lt;code>pip install pydevd-pycharm~=&amp;lt;version of PyCharm on the local machine&amp;gt;
-&lt;/code>&lt;/pre>You can find your PyCharm&amp;rsquo;s version from &lt;em>Help -&amp;gt; About&lt;/em>, it&amp;rsquo;s something like &lt;code>#PY-&amp;lt;version&amp;gt;&lt;/code>. The install command can
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pip install pydevd-pycharm~&lt;span style="color:#f92672">=&lt;/span>&amp;lt;version of PyCharm on the local machine&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>You can find your PyCharm&amp;rsquo;s version from &lt;em>Help -&amp;gt; About&lt;/em>, it&amp;rsquo;s something like &lt;code>#PY-&amp;lt;version&amp;gt;&lt;/code>. The install command can
 also be copied from the remote server configuration dialog.&lt;/li>
 &lt;li>Add this to your main (can be copied from the remote server configuration dialog as well):
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>pydevd_pycharm&lt;span style="color:#f92672">.&lt;/span>settrace(&lt;span style="color:#e6db74">&amp;#39;localhost&amp;#39;&lt;/span>, port&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2345&lt;/span>, stdoutToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>, stderrToServer&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#66d9ef">True&lt;/span>)

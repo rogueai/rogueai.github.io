@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>fritzbox on > RogueAI</title><link>https://rogueai.github.io/tags/fritzbox/</link><description>Recent content in fritzbox on > RogueAI</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>© 2022 Rogue|AI</copyright><lastBuildDate>Fri, 08 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://rogueai.github.io/tags/fritzbox/index.xml" rel="self" type="application/rss+xml"/><item><title>Proton VPN on FritzBox routers</title><link>https://rogueai.github.io/posts/proton-vpn-fritzbox/</link><pubDate>Fri, 08 Sep 2023 00:00:00 +0000</pubDate><guid>https://rogueai.github.io/posts/proton-vpn-fritzbox/</guid><description>With FritzBox now supporting WireGuard from FirtzOS version 7.50 1, I wondered if it would be possible for it to be setup as Proton VPN client. Unfortunately, it seems the new feature is only intended to be used as a way to allow for external access into the local network. For this reason, the router requires either DynDns settings or FritzBox Account to be configure.
+I had neither, and only wanted to tunnel all traffic through WireGuard/Proton VPN.</description><content>&lt;p>With FritzBox now supporting WireGuard from FirtzOS version 7.50 &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>, I wondered if it would be possible for it to be setup as Proton VPN client.
+Unfortunately, it seems the new feature is only intended to be used as a way to allow for external access into the local network. For this reason, the router requires either DynDns settings or FritzBox Account to be configure.&lt;/p>
+&lt;p>I had neither, and only wanted to tunnel all traffic through WireGuard/Proton VPN. I&amp;rsquo;m basing this guide on this Reddit post: &lt;a href="https://www.reddit.com/r/fritzbox/comments/ymshoj/tutorialworkaround_how_to_use_fritzbox_wireguard/">https://www.reddit.com/r/fritzbox/comments/ymshoj/tutorialworkaround_how_to_use_fritzbox_wireguard/&lt;/a>&lt;/p>
+&lt;h2 id="my-setup">My setup&lt;/h2>
+&lt;ul>
+&lt;li>FritzBox 4040&lt;/li>
+&lt;li>Proton VPN, although it should probably work for any VPN service supporting WireGuard&lt;/li>
+&lt;/ul>
+&lt;h2 id="steps">Steps&lt;/h2>
+&lt;ul>
+&lt;li>From Proton VPN: create a download a new WireGuard configuration for routers&lt;/li>
+&lt;li>Access FritzBox &amp;gt; Internet &amp;gt; Permit Access &amp;gt; DynDNS
+&lt;ul>
+&lt;li>Select &amp;ldquo;Use DynDNS&amp;rdquo;&lt;/li>
+&lt;li>Update URL: &lt;a href="http://httpstat.us/200?user=&amp;amp;password=&amp;amp;host=&amp;amp;ip=&amp;amp;ip6=">http://httpstat.us/200?user=&amp;amp;password=&amp;amp;host=&amp;amp;ip=&amp;amp;ip6=&lt;/a>&lt;/li>
+&lt;li>Domain name: &lt;code>localhost.local&lt;/code> (it doesn&amp;rsquo;t need to be an existing domain name)&lt;/li>
+&lt;li>Username: anything&lt;/li>
+&lt;li>Password: anything&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Access FritzBox &amp;gt; Internet &amp;gt; Permis Access &amp;gt; VPN (WireGuard)
+&lt;ul>
+&lt;li>Select &lt;code>Add Connection&lt;/code>&lt;/li>
+&lt;li>Select &lt;code>Connect networks or establish special connections&lt;/code>, &lt;code>Next&lt;/code>&lt;/li>
+&lt;li>Select &lt;code>Yes&lt;/code> on &lt;code>Has this WireGuard connection already been set up at the remote connection?&lt;/code>, &lt;code>Next&lt;/code>&lt;/li>
+&lt;li>Provide a name for the connection&lt;/li>
+&lt;li>Upload the exported Proton VPN WireGuard&lt;/li>
+&lt;li>Select &lt;code>Send all IPv4 network traffic via the VPN connection&lt;/code>&lt;/li>
+&lt;li>(Optional) Select &lt;code>Only certain devices in the home network are to be accessible over this WireGuard® connection&lt;/code>&lt;/li>
+&lt;li>&lt;code>Finish&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>And we are done!&lt;/p>
+&lt;blockquote>
+&lt;p>Note that this won&amp;rsquo;t allow any external access into the network.
+The &lt;code>httpstat.us&lt;/code> service can be self hosted for increased privacy.&lt;/p>
+&lt;/blockquote>
+&lt;div class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1">
+&lt;p>&lt;a href="https://en.avm.de/service/vpn/connecting-the-fritzbox-to-a-vpn-provider-via-wireguard/">https://en.avm.de/service/vpn/connecting-the-fritzbox-to-a-vpn-provider-via-wireguard/&lt;/a>&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/div></content></item></channel></rss>
