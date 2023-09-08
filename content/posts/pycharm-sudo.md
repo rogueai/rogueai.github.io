@@ -26,7 +26,7 @@ We'll be using a local  Python Debug Server for this approach
 - Leave `localhost` as the *IDE host name*
 - Set a port, e.g.: `2345`
 - Install `pydevd-pycharm`: 
-  ```
+  ```bash
   pip install pydevd-pycharm~=<version of PyCharm on the local machine>
   ```
   You can find your PyCharm's version from *Help -> About*, it's something like `#PY-<version>`. The install command can
